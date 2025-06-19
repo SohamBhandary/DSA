@@ -1,0 +1,18 @@
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int n = nums.length;
+        HashMap <Integer,Integer> prefixSum = new HashMap<>();
+        int currentPrefixSum=0,subArrayCount=0;
+        prefixSum.put(0,1);
+        for(int i=0;i<n;i++){
+            currentPrefixSum +=nums[i];
+            int sumToRemove=currentPrefixSum-k;
+            subArrayCount+=prefixSum.getOrDefault(sumToRemove,0);
+            prefixSum.put(currentPrefixSum,prefixSum.getOrDefault(currentPrefixSum,0)+1);
+        }
+        return subArrayCount;
+
+
+        
+    }
+}
