@@ -1,0 +1,54 @@
+class Solution {
+
+ public int firstOccurence(int[] nums, int target) {
+    int n = nums.length;
+    int l=0;
+    int h=n-1;
+    int first=-1;
+    while(l<=h){
+        int mid=(l+h)/2;
+        if(nums[mid]==target){
+            first=mid;
+            h=mid-1;
+        }else if(target>nums[mid])
+        {
+            l=mid+1;
+        }
+        else{
+            h=mid-1;
+        }
+    }return first;
+    
+        
+    }
+     public int LastOccurence(int[] nums, int target) {
+         int n = nums.length;
+    int l=0;
+    int h=n-1;
+    int last=-1;
+    while(l<=h){
+        int mid=(l+h)/2;
+        if(nums[mid]==target){
+        last=mid;
+           l=mid+1;
+        }else if(target>nums[mid])
+        {
+            l=mid+1;
+        }
+        else{
+            h=mid-1;
+        }
+    }return last;
+        
+    
+        
+    }
+
+    public int[] searchRange(int[] nums, int target) {
+        int first=firstOccurence( nums,  target);
+        int second=LastOccurence( nums,  target);
+        if(first==-1) return new int[]{-1,-1};
+         if(second==-1) return new int[]{-1,-1};
+         return new int []{first,second};
+    }
+}
