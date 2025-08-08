@@ -1,0 +1,12 @@
+class MyStack {
+    private ArrayList<Integer> stack = new ArrayList<>();
+
+    public void push(int x) {
+        stack.add(x);
+    }
+
+    public int pop() {
+        if(stack.isEmpty()) return -1;
+        return stack.remove(stack.size() - 1);
+    }
+}
