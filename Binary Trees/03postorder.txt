@@ -1,0 +1,16 @@
+class Solution {
+
+    public void recursiveTraversal(TreeNode root , List<Integer> arr){
+        if(root==null) return;
+        recursiveTraversal(root.left,arr);
+        recursiveTraversal(root.right,arr);
+        arr.add(root.val);
+
+    }
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> arr= new ArrayList<>();
+        recursiveTraversal(root,arr);
+        return arr;
+        
+    }
+}
