@@ -1,0 +1,19 @@
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+
+        return checkBalanced(root)!=-1;
+
+
+        
+    }
+    int checkBalanced(TreeNode root){
+        if(root==null) return 0;
+        int left=checkBalanced(root.left);
+        if(left==-1) return -1;
+        int right=checkBalanced(root.right);
+        if(right==-1) return -1;
+        if(Math.abs(left-right)>1) return-1;
+        return Math.max(left,right)+1;
+
+    }
+}
