@@ -1,0 +1,42 @@
+class Solution {
+    static class Pair<K, V> {
+        private K key;
+        private V value;
+        public Pair(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+        public K getKey() {
+            return key;
+        }
+        public V getValue() {
+            return value;
+        }
+    }
+    static ArrayList<Integer> topView(Node root) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        if (root == null) return ans;
+        Map<Integer, Integer> mpp = new TreeMap<>();
+        Queue<Pair<Node, Integer>> q = new LinkedList<>();
+        q.offer(new Pair<>(root, 0));
+        while (!q.isEmpty()) {
+            Pair<Node, Integer> it = q.poll();
+            Node node = it.getKey();
+            int line = it.getValue();
+            if (!mpp.containsKey(line)) {
+                mpp.put(line, node.data);
+            }
+            if (node.left != null) {
+                q.offer(new Pair<>(node.left, line - 1));
+            }
+            if (node.right != null) {
+                q.offer(new Pair<>(node.right, line + 1));
+            }
+        }
+
+        for (Integer val : mpp.values()) {
+            ans.add(val);
+        }
+        return ans;
+    }
+}
