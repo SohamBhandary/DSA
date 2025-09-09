@@ -1,0 +1,32 @@
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        if(inorder.length!=postorder.length){
+            return null;
+        }
+        Map<Integer,Integer> mpp = new HashMap<>();
+        for(int i=0;i<inorder.length;i++){
+            mpp.put(inorder[i],i);
+        }
+
+        TreeNode root=buildTree(inorder,0,inorder.length-1,postorder,0,postorder.length-1,mpp);
+        return root;
+        
+    }
+
+    public TreeNode buildTree(int[]inorder,int inStart,int inEnd,int []postorder,int postStart,int postEnd,Map<Integer,Integer>mpp){
+
+        if(inStart>inEnd || postStart>postEnd){
+            return null;
+        }
+        TreeNode root= new TreeNode(postorder[postEnd]);
+        int inroot = mpp.get(postorder[postEnd]);
+        int numsLeft=inroot-inStart;
+        root.left=buildTree(inorder,inStart,inroot-1,postorder,postStart,postStart+numsLeft-1,mpp);
+        root.right=buildTree(inorder,inroot+1,inEnd,postorder,postStart+numsLeft,postEnd-1,mpp);
+        return root;
+
+        
+
+
+    }
+}

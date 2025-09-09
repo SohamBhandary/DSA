@@ -1,0 +1,37 @@
+public class Codec {
+
+    public String recurSerialize(TreeNode root, String str){
+        if(root == null) {
+            str += "null,";
+        } else {
+            str += String.valueOf(root.val) + ",";
+            str = recurSerialize(root.left, str);
+            str = recurSerialize(root.right, str);
+        }
+        return str;
+    }
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        return recurSerialize(root, "");
+    }
+
+    public TreeNode recurDeserilaize(List<String> str){
+        if(str.get(0).equals("null")){
+            str.remove(0);
+            return null;
+        }
+        TreeNode root = new TreeNode(Integer.valueOf(str.get(0)));
+        str.remove(0);
+        root.left = recurDeserilaize(str);
+        root.right = recurDeserilaize(str);
+        return root;
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] strArr = data.split(",");
+        List<String> strList = new LinkedList<String>(Arrays.asList(strArr));
+        return recurDeserilaize(strList);
+    }
+}
