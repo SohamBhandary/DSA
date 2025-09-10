@@ -1,0 +1,20 @@
+class Solution {
+    int findCeil(Node root, int x) {
+        int ceil = -1;
+        
+        while (root != null) {
+            if (root.data == x) {
+                return root.data; // Exact match
+            }
+            
+            if (x < root.data) {
+                ceil = root.data; // Possible ceil, look left for smaller ceil
+                root = root.left;
+            } else {
+                root = root.right; // x >= root.data, look right
+            }
+        }
+        
+        return ceil;
+    }
+}
