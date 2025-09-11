@@ -1,0 +1,36 @@
+class Solution {
+    private TreeNode helper(TreeNode root){
+        if(root.left==null)return root.right;
+        if(root.right==null)return root.left;
+        TreeNode rightChild=root.right;
+        TreeNode leftmost=rightChild;
+        while(leftmost.left!=null){
+            leftmost=leftmost.left;
+        }
+        leftmost.left=root.left;
+        return rightChild;
+    }
+    public TreeNode deleteNode(TreeNode root, int key){
+        if(root==null)return null;
+        if(root.val==key)return helper(root);
+        TreeNode node=root;
+        while(node!=null){
+            if(key<node.val){
+                if(node.left!=null&&node.left.val==key){
+                    node.left=helper(node.left);
+                    break;
+                }else{
+                    node=node.left;
+                }
+            }else{
+                if(node.right!=null&&node.right.val==key){
+                    node.right=helper(node.right);
+                    break;
+                }else{
+                    node=node.right;
+                }
+            }
+        }
+        return root;
+    }
+}
