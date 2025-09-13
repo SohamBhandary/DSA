@@ -1,0 +1,48 @@
+ class BstIterator{
+    private Stack<TreeNode>st;
+    private boolean reverse;
+    public BstIterator(TreeNode root,boolean isReverse){
+        st= new Stack<>();
+        reverse=isReverse;
+        pushAll(root);
+    }
+    private void pushAll(TreeNode root){
+        while(root!=null){
+            st.push(root);
+            root=(reverse)?root.right:root.left;
+        }
+    }
+    private boolean hasNext(){
+        return !st.isEmpty();
+    }
+    public int next(){
+        TreeNode curr=st.pop();
+        if(!reverse) pushAll(curr.right);
+        else pushAll(curr.left);
+        return curr.val;
+    }
+
+ }
+class Solution {
+    public boolean findTarget(TreeNode root, int k) {
+        if(root==null) return false;
+        BstIterator left = new BstIterator(root,false);
+        BstIterator right = new BstIterator(root,true);
+        int i=left.next();
+        int j =right.next();
+        while(i<j){
+            if(i+j==k){
+                return true;
+            }
+            else if(i+j<k){
+                i=left.next();
+
+            }
+            else{
+                j=right.next();
+            }
+        }
+        return false;
+        
+    }
+}
