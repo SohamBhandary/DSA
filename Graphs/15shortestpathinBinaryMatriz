@@ -1,0 +1,41 @@
+class Solution {    
+        private int [] delRow={-1, -1, -1, 0, 0, 1, 1, 1};
+        private int [] delCol={-1, 0, 1, -1, 1, -1, 0, 1};
+
+        private boolean isValid(int row,int col,int n,int m){
+            return (row>=0 && row<n && col>=0 && col<m);
+        }        
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        if(grid[0][0]!=0 || grid[n-1][m-1]!=0) return -1;
+        int [][] dist= new int[n][m];
+        for(int[] row : dist){
+            Arrays.fill(row,(int)1e9);
+        }
+        Queue<int []> q = new LinkedList<>();
+        dist[0][0]=1;
+        q.add(new int [] {1,0,0});
+        while(!q.isEmpty()){
+            int []it =q.poll();
+            int dis=it[0];
+            int row=it[1];
+            int col=it[2];
+
+            if(row==n-1  && col==m-1) return dis;
+
+            for(int i =0;i<8;i++){
+                int newRow=row+delRow[i];
+                int newCol=col+delCol[i];
+
+     if(isValid(newRow,newCol,n,m) && grid[newRow][newCol]==0 && dis+1<dist[newRow][newCol]){
+        dist[newRow][newCol]=dis+1;
+        q.add(new int []{dis+1,newRow,newCol});
+                }
+            }
+            }
+        return -1;
+
+
+    }
+}
