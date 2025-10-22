@@ -1,0 +1,41 @@
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        if(src==dst) return 0;
+        List<List<int[]>>adj= new ArrayList<>();
+        for(int i=0;i<n;i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int [] flight:flights){
+            adj.get(flight[0]).add(new int[]{flight[1],flight[2]});
+        }
+        int minDist[]= new int[n];
+        Arrays.fill(minDist,(int)1e9);
+        Queue<int[]>q= new LinkedList<>();
+        q.add(new int [] {0,src,0});
+
+        while(!q.isEmpty()){
+            int []p=q.poll();
+            int stop=p[0];
+            int node=p[1];
+            int dist=p[2];
+            if(stop>k) continue;
+            for(int []nei:adj.get(node)){
+                int adjNode=nei[0];
+                int edgeWt=nei[1];
+                if(dist+edgeWt<minDist[adjNode] && stop<=k){
+                    minDist[adjNode]=dist+edgeWt;
+                    q.add(new int []{stop+1,adjNode,dist+edgeWt});
+                }
+
+            }
+
+
+        }
+        if(minDist[dst]==((int)1e9)) return -1;
+        return minDist[dst];
+
+
+
+        
+    }
+}
